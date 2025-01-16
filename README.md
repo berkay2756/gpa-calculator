@@ -1,5 +1,5 @@
-# term-gpa-calculator
-A python script to calculate term GPA.
+# gpa-calculator
+A python script to calculate term and cumulative GPA.
 
 GPA calculation:
 - A  --> 4.00

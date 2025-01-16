@@ -1,80 +1,73 @@
 import sys
-import os
 
-GPA = 0
-allCredits = 0
-allGradePoints = 0
-grade = ""
-print("Welcome to term GPA calculator!")
-userinput = input("Write start or exit: ")
+cumulative_credits = 0
+cumulative_grade_points = 0
 
-while True:
-    GPA = 0
-    allCredits = 0
-    allGradePoints = 0
-    grade = ""
+print("Welcome to the Cumulative GPA Calculator!")
+user_input = input("Type 'start' to begin or 'exit' to quit: ").lower()
 
-    while userinput.lower() != "exit":
-        grade = input("Please enter your grade: ")
+while user_input != "exit":
+    term_credits = 0
+    term_grade_points = 0
+    term_gpa = 0
+
+    print("\nStarting a new term...")
+    while True:
+        grade = input("Enter your grade (or type 'end' to finish the term): ").lower()
         if grade == "end":
             break
-        
-        gradeNumber = 0
-        gradePoint = 0
-        credit = 0
 
-        if grade.lower() == "a":
-            gradeNumber = 4.0
-        elif grade.lower() == "a-":
-            gradeNumber = 3.7
-        elif grade.lower() == "b+":
-            gradeNumber = 3.3
-        elif grade.lower() == "b":
-            gradeNumber = 3.0
-        elif grade.lower() == "b-":
-            gradeNumber = 2.7
-        elif grade.lower() == "c+":
-            gradeNumber = 2.3
-        elif grade.lower() == "c":
-            gradeNumber = 2.0  
-        elif grade.lower() == "c-":
-            gradeNumber = 1.7 
-        elif grade.lower() == "d+":
-            gradeNumber = 1.3
-        elif grade.lower() == "d":
-            gradeNumber = 1.0
-        elif grade.lower() == "d-":
-            gradeNumber = 0.7
-        elif grade.lower() == "f":
-            gradeNumber = 0.0
-
-        credit = int(input("Please enter the credit of the class: "))
-        gradePoint = credit * gradeNumber
-
-        allCredits += credit
-        allGradePoints += gradePoint
-
-    if userinput.lower() == "exit":
-        print("Quitting...")
-    else:    
-        if allCredits == 0: # solution to zero division error
-            print("An error occurred. Possibly caused by the lack of credit input.")
+        grade_number = 0
+        if grade == "a":
+            grade_number = 4.0
+        elif grade == "a-":
+            grade_number = 3.7
+        elif grade == "b+":
+            grade_number = 3.3
+        elif grade == "b":
+            grade_number = 3.0
+        elif grade == "b-":
+            grade_number = 2.7
+        elif grade == "c+":
+            grade_number = 2.3
+        elif grade == "c":
+            grade_number = 2.0
+        elif grade == "c-":
+            grade_number = 1.7
+        elif grade == "d+":
+            grade_number = 1.3
+        elif grade == "d":
+            grade_number = 1.0
+        elif grade == "d-":
+            grade_number = 0.7
+        elif grade == "f":
+            grade_number = 0.0
         else:
-            GPA = allGradePoints / allCredits
-            print("Your term GPA is", format(GPA,".2f"))
+            print("Invalid grade entered. Please try again.")
+            continue
 
-        question = input("Would you like to start over? ")
+        try:
+            credit = int(input("Enter the credit hours for this class: "))
+            grade_points = credit * grade_number
 
-        if question == "yes":
-            print("Restarting the calculator...")
-        elif question == "no":
-            print("Alright, thank you for using the calculator!")
-            sys.exit()
+            term_credits += credit
+            term_grade_points += grade_points
+        except ValueError:
+            print("Invalid credit hours. Please enter a number.")
 
+    if term_credits > 0:
+        term_gpa = term_grade_points / term_credits
+        print(f"Your term GPA is {term_gpa:.2f}")
 
-    
+        cumulative_credits += term_credits
+        cumulative_grade_points += term_grade_points
 
+        cumulative_gpa = cumulative_grade_points / cumulative_credits
+        print(f"Your cumulative GPA is {cumulative_gpa:.2f}")
+    else:
+        print("No valid grades or credits entered for this term.")
 
-
-
-
+    user_input = input("\nWould you like to start another term? (yes/no): ").lower()
+    if user_input == "no":
+        print("Thank you for using the Cumulative GPA Calculator! Goodbye!")
+        break
